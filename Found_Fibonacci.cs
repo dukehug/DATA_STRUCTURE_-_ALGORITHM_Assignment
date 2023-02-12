@@ -3,6 +3,8 @@
 using System;
 public class program
 {
+    
+    //fromula of fibonacci
     public static int Fib(int n1)
     {
         //if ( (n1 == 1) || (number == 2) )
@@ -12,6 +14,7 @@ public class program
             return Fib(n1 - 1) + Fib(n1 - 2);
     }
 
+    //main method 
     public static void Main()
     {
         int num;
