@@ -25,5 +25,7 @@ public class program
         num = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine("\nThe Fibonacci of {0} th term  is {1} \n", num, Fib(num));
+        
+        Console.ReadLine();
     }
 }
