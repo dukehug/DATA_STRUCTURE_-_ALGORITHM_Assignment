@@ -1,3 +1,9 @@
+/*
+Machine Problem 2 - Midterm
+Author: Duke Hsu
+Date: 08 PM, Mar,15 2023
+*/
+
 using System;
 using System.Collections.Generic;
 
