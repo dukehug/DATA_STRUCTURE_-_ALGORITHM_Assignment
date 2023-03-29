@@ -1,3 +1,21 @@
+/*
+In this program, LinkedList is used to simulate the operation of a shopping cart management. The following methods are utilized:
+
+a. `AddLast`    add item to cart
+
+b. `RemoveFirst`  remove first item form the cart
+
+c. `RemoveLast` remove last item form the cart
+
+d. `Clear`	clear cart
+
+e. `Switch`  menu function
+
+f. `foreach loop`  display all items
+
+g. `if...else`  to  check if user input is int and check `cartList` value 
+
+*/
 using System;
 using System.Collections.Generic;
 
