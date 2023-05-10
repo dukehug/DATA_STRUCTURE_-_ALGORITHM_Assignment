@@ -12,8 +12,18 @@ namespace InventoryAndOrderManagementSystem
         #region Main method - While loop  and If..else satatment -  User login and Main menu; 
         static void Main(string[] args)
         {
-            Console.WriteLine("\n==== Welcome use Order and Inventory manager system ====\n");
+            Console.WriteLine(@"
 
+
+ ██     ██ ███████ ██       ██████  ██████  ███    ███ ███████ 
+██     ██ ██      ██      ██      ██    ██ ████  ████ ██      
+██  █  ██ █████   ██      ██      ██    ██ ██ ████ ██ █████   
+██ ███ ██ ██      ██      ██      ██    ██ ██  ██  ██ ██      
+ ███ ███  ███████ ███████  ██████  ██████  ██      ██ ███████ 
+
+
+");
+            Console.WriteLine("================================================================");
             bool isLoggedIn = false;
 
             while (!isLoggedIn)
@@ -27,7 +37,7 @@ namespace InventoryAndOrderManagementSystem
                 if (username == "admin" && password == "password")
                 {
                     isLoggedIn = true;
-                    Console.WriteLine("\n Login successful! \n");
+                    Console.WriteLine("\n ============= Login successful! =============\n");
                 }
                 else
                 {
@@ -41,7 +51,7 @@ namespace InventoryAndOrderManagementSystem
 
             while (isRunning)
             {
-                Console.WriteLine("Please choose an option:");
+                Console.WriteLine("\t Please choose an option:\t \n");
                 Console.WriteLine("1. Inventory management system");
                 Console.WriteLine("2. Order management system");
                 Console.WriteLine("3. Exit");
@@ -68,7 +78,6 @@ namespace InventoryAndOrderManagementSystem
         }
         #endregion;
 
-
         #region Switch  and While loop -  Inventory and Order Menu;
         //inventory management menu
         static void InventoryManager()
@@ -77,7 +86,18 @@ namespace InventoryAndOrderManagementSystem
 
             while (isRunning)
             {
-                Console.WriteLine("Please choose an option:");
+                Console.WriteLine(@"
+
+██ ███    ██ ██    ██ ███████ ███    ██ ████████  ██████  ██████  ██    ██ 
+██ ████   ██ ██    ██ ██      ████   ██    ██    ██    ██ ██   ██  ██  ██  
+██ ██ ██  ██ ██    ██ █████   ██ ██  ██    ██    ██    ██ ██████    ████   
+██ ██  ██ ██  ██  ██  ██      ██  ██ ██    ██    ██    ██ ██   ██    ██    
+██ ██   ████   ████   ███████ ██   ████    ██     ██████  ██   ██    ██    
+                                                                           
+                                                                           
+");
+                Console.WriteLine("================================================================");
+                Console.WriteLine("Please choose an option:\n");
                 Console.WriteLine("1. Add item to inventory");
                 Console.WriteLine("2. Remove item from inventory");
                 Console.WriteLine("3. Update inventory");
@@ -120,11 +140,23 @@ namespace InventoryAndOrderManagementSystem
 
             while (isRunning)
             {
+                Console.WriteLine(@"
+
+ ██████  ██████  ██████  ███████ ██████  
+██    ██ ██   ██ ██   ██ ██      ██   ██ 
+██    ██ ██████  ██   ██ █████   ██████  
+██    ██ ██   ██ ██   ██ ██      ██   ██ 
+ ██████  ██   ██ ██████  ███████ ██   ██ 
+                                         
+                                         
+
+");
                 Console.WriteLine("Please choose an option:");
                 Console.WriteLine("1. Add order");
                 Console.WriteLine("2. Print order");
                 Console.WriteLine("3. View sales summary");
-                Console.WriteLine("4. Back");
+                Console.WriteLine("4. View inventory");
+                Console.WriteLine("5. Back");
 
                 string option = Console.ReadLine();
 
@@ -141,6 +173,9 @@ namespace InventoryAndOrderManagementSystem
                         ViewSalesSummary();
                         break;
                     case "4":
+                        ViewInventory();
+                        break;
+                    case "5":
                         isRunning = false;
                         break;
                     default:
@@ -153,7 +188,6 @@ namespace InventoryAndOrderManagementSystem
         }
 
         #endregion
-
 
         #region Dictionary - Inventory management;
 
@@ -253,101 +287,16 @@ namespace InventoryAndOrderManagementSystem
 
             }
 
+            Console.ReadLine();
+
         }
         #endregion
-
 
         #region List - Order management;
 
 
-        //addorder
-        static void AddOrder()
-        {
-            Console.WriteLine("Enter customer name:");
-            string customerName = Console.ReadLine();
-
-
-            bool addProduct = true;
-
-            while(addProduct)
-            { 
-            Console.WriteLine("Enter product name:");
-            string productName = Console.ReadLine();
-
-            Console.WriteLine("Enter product quantity:");
-            int productQuantity = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter product price:");
-            decimal productPrice = decimal.Parse(Console.ReadLine());
-
-            if (inventory.ContainsKey(productName))
-            {
-                var (quantity, price) = inventory[productName];
-
-                if (quantity >= productQuantity)
-                {
-                    // Calculate the total price for the order
-                    decimal totalPrice = productPrice * productQuantity;
-
-                    // Reduce the quantity in the inventory
-                    quantity -= productQuantity;
-
-                    // Display order details
-                    Console.WriteLine("Order placed successfully:");
-                    Console.WriteLine("Customer Name: " + customerName);
-                    Console.WriteLine("Product Name: " + productName);
-                    Console.WriteLine("Product Quantity: " + productQuantity);
-                    Console.WriteLine("Product Price: " + productPrice);
-                    Console.WriteLine("Total Price: " + totalPrice);
-
-                    // Update the inventory in the dictionary
-                    inventory[productName] = (quantity, price);
-
-                    // Create a new order and add it to the order list
-                    Order newOrder = new Order(customerName, productName, productQuantity, productPrice, totalPrice);
-                    orderList.Add(newOrder);
-
-                    Console.WriteLine("Order placed successfully.");
-
-                    }
-                else
-                {
-                    Console.WriteLine("Insufficient quantity in the inventory.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Product not found in the inventory.");
-
-            }
-                Console.Write("Add another Product to the order? (Y/N): ");
-                string addAnother = Console.ReadLine();
-
-                if (addAnother.ToUpper() != "Y")
-                {
-                    addProduct = false;
-                }
-            }
-        }
-
-
-        //prinde all custoemr order
-        static void PrintOrders()
-        {
-            
-            Console.WriteLine("Customer Orders:");
-            foreach (var order in orderList)
-            {
-                Console.WriteLine("Customer Name: " + order.CustomerName);
-                Console.WriteLine("Product Name: " + order.ProductName);
-                Console.WriteLine("Product Quantity: " + order.ProductQuantity);
-                Console.WriteLine("Product Price: " + order.ProductPrice);
-                Console.WriteLine("Total Price: " + order.TotalPrice.ToString("N"));
-                Console.WriteLine("------------------------");
-            }
-        }
-
-         class Order
+        //order class  for AddOrder 
+        class Order
         {
             public string CustomerName { get; }
             public string ProductName { get; }
@@ -355,6 +304,7 @@ namespace InventoryAndOrderManagementSystem
             public decimal ProductPrice { get; }
             public decimal TotalPrice { get; }
 
+            //function to set value
             public Order(string customerName, string productName, int productQuantity, decimal productPrice, decimal totalPrice)
             {
                 CustomerName = customerName;
@@ -365,36 +315,144 @@ namespace InventoryAndOrderManagementSystem
             }
         }
 
+        //addorder
+        static void AddOrder()
+        {
+            Console.WriteLine("Enter customer name:");
+            string customerName = Console.ReadLine();
+
+
+            bool addProduct = true;
+
+            while (addProduct)
+            {
+                Console.WriteLine("Enter product name:");
+                string productName = Console.ReadLine();
+
+                Console.WriteLine("Enter product quantity:");
+                int productQuantity = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter product price:");
+                decimal productPrice = decimal.Parse(Console.ReadLine());
+
+                if (inventory.ContainsKey(productName))
+                {
+                    var (quantity, price) = inventory[productName];
+
+                    if (quantity >= productQuantity)
+                    {
+                        // calculate the total price for the order
+                        decimal totalPrice = productPrice * productQuantity;
+
+                        // reduce the quantity in the inventory
+                        quantity -= productQuantity;
+
+                        // display order details
+                        Console.WriteLine("Order placed successfully!\n");
+                        Console.WriteLine("==========================");
+                        Console.WriteLine("\n\t\t ======== Order Receipt ======== \n");
+                        Console.WriteLine("Customer Name\t Product Name \t Product Quantity\t Product Price");
+                        Console.WriteLine($"\n{customerName}\t\t\t{productName}\t\t{productQuantity}\t\t\t{productPrice}");
+                        Console.WriteLine("\nTotal amount: " + totalPrice.ToString("N")); 
+                        Console.WriteLine("---------------------------\n");
+
+                        // update the inventory in the dictionary
+                        inventory[productName] = (quantity, price);
+
+                        // create a new order and add it to the order list
+                        Order newOrder = new Order(customerName, productName, productQuantity, productPrice, totalPrice);
+                        orderList.Add(newOrder);
+
+                        Console.WriteLine("Order placed successfully.");
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Insufficient quantity in the inventory.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Product not found in the inventory.");
+
+                }
+                Console.Write("Add another Product to the order? (Y/N): ");
+                string addAnother = Console.ReadLine();
+
+                if (addAnother.ToUpper() != "Y")
+                {
+                    addProduct = false;
+                }
+            }
+
+           
+        }
+
+        //printer all custoemr order
+        static void PrintOrders()
+        {
+            //use list.count to check List 
+            if (orderList.Count > 0)
+            {
+                Console.WriteLine("\n\t\t======== Customer Orders ========\n");
+                foreach (var order in orderList)
+                {
+                    Console.WriteLine("Customer Name\t Product Name \t Product Quantity\t Product Price");
+                    Console.WriteLine($"\n{order.CustomerName}\t\t\t{order.ProductName}\t\t{order.ProductQuantity}\t\t\t{order.ProductPrice}");
+                    Console.WriteLine("\nTotal amount: " + order.TotalPrice.ToString("N"));
+                    Console.WriteLine("------------------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\n\t\t!!======== !!Orderlist is empty!! ========!!\n");
+
+            }
+
+            Console.ReadKey();
+        }
+
+        //summary sales
         static void ViewSalesSummary()
         {
             Dictionary<string, decimal> customerSales = new Dictionary<string, decimal>();
 
-            foreach (var order in orderList)
+            //check if have order
+            if (orderList.Count > 0 )
             {
-                if (customerSales.ContainsKey(order.CustomerName))
+                foreach (var order in orderList)
                 {
-                    customerSales[order.CustomerName] += order.TotalPrice;
+                    if (customerSales.ContainsKey(order.CustomerName))
+                    {
+                        customerSales[order.CustomerName] += order.TotalPrice;
+                    }
+                    else
+                    {
+                        //add customersales to Dictionary
+                        customerSales.Add(order.CustomerName, order.TotalPrice);
+                    }
                 }
-                else
+
+                Console.WriteLine("\n\t\t======== Sales Summary ========\n");
+
+                decimal totalSales = 0;
+                //display summary
+                foreach (var entry in customerSales)
                 {
-                    customerSales.Add(order.CustomerName, order.TotalPrice);
+                    Console.WriteLine("Customer Name \t Amount ");
+                    Console.WriteLine($"\n{entry.Key}\t\t{entry.Value.ToString("N")}");
+                    Console.WriteLine("------------------------");
+                    totalSales += entry.Value;
                 }
+
+                Console.WriteLine("\nTotal Amount (All Customers): " + totalSales.ToString("N"));
             }
-
-            Console.WriteLine("Sales Summary:");
-            decimal totalSales = 0;
-
-            foreach (var entry in customerSales)
+            else
             {
-                Console.WriteLine("Customer Name: " + entry.Key);
-                Console.WriteLine("Total Sales: " + entry.Value.ToString("N"));
-                Console.WriteLine("------------------------");
-                totalSales += entry.Value;
+                Console.WriteLine("\n\t\t!!======== !!No customer order!! ========!!\n");
             }
-
-            Console.WriteLine("Total Sales (All Customers): " + totalSales.ToString("N"));
+            Console.ReadKey();
         }
-
-        #endregion
     }
 }
+#endregion
