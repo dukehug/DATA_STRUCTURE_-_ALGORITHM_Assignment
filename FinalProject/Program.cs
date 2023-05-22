@@ -15,11 +15,10 @@ namespace InventoryAndOrderManagementSystem
             Console.WriteLine(@"
 
 
- ██     ██ ███████ ██       ██████  ██████  ███    ███ ███████ 
-██     ██ ██      ██      ██      ██    ██ ████  ████ ██      
-██  █  ██ █████   ██      ██      ██    ██ ██ ████ ██ █████   
-██ ███ ██ ██      ██      ██      ██    ██ ██  ██  ██ ██      
- ███ ███  ███████ ███████  ██████  ██████  ██      ██ ███████ 
+           __
+      (___()'`;     Welcome ! 
+      /,    /`
+      \\""--\\
 
 
 ");
@@ -56,17 +55,17 @@ namespace InventoryAndOrderManagementSystem
                 Console.WriteLine("2. Order management system");
                 Console.WriteLine("3. Exit");
 
-                string option = Console.ReadLine();
+                int option = Convert.ToInt32(Console.ReadLine());
 
                 switch (option)
                 {
-                    case "1":
+                    case 1:
                         InventoryManager();
                         break;
-                    case "2":
+                    case 2:
                         OrderManager();
                         break;
-                    case "3":
+                    case 3:
                         isRunning = false;
                         Console.WriteLine("Thank you for using the Inventory and Order Management System. Goodbye!");
                         break;
@@ -104,23 +103,23 @@ namespace InventoryAndOrderManagementSystem
                 Console.WriteLine("4. View inventory");
                 Console.WriteLine("5. Back");
 
-                string option = Console.ReadLine();
+                int option = Convert.ToInt32(Console.ReadLine());
 
                 switch (option)
                 {
-                    case "1":
+                    case 1:
                         AddItemToInventory();
                         break;
-                    case "2":
+                    case 2:
                         RemoveItemFromInventory();
                         break;
-                    case "3":
+                    case 3:
                         UpdateInventory();
                         break;
-                    case "4":
+                    case 4:
                         ViewInventory();
                         break;
-                    case "5":
+                    case 5:
                         isRunning = false;
                         break;
                     default:
@@ -158,24 +157,24 @@ namespace InventoryAndOrderManagementSystem
                 Console.WriteLine("4. View inventory");
                 Console.WriteLine("5. Back");
 
-                string option = Console.ReadLine();
+                int option = Convert.ToInt32(Console.ReadLine());
 
                 switch (option)
                 {
 
-                    case "1":
+                    case 1:
                         AddOrder();
                         break;
-                    case "2":
+                    case 2:
                         PrintOrders();
                         break;
-                    case "3":
+                    case 3:
                         ViewSalesSummary();
                         break;
-                    case "4":
+                    case 4:
                         ViewInventory();
                         break;
-                    case "5":
+                    case 5:
                         isRunning = false;
                         break;
                     default:
@@ -196,7 +195,7 @@ namespace InventoryAndOrderManagementSystem
         {
             Console.WriteLine("Enter item name:");
             string itemName = Console.ReadLine();
-
+            
             if (inventory.ContainsKey(itemName))
             {
                 Console.WriteLine("Item already exists in inventory. Enter new item quantity:");
@@ -205,6 +204,7 @@ namespace InventoryAndOrderManagementSystem
                 Console.WriteLine("Enter new item price:");
                 decimal newItemPrice = decimal.Parse(Console.ReadLine());
 
+                //dictionary key        value
                 inventory[itemName] = (newItemQuantity, newItemPrice);
                 Console.WriteLine("Inventory updated.");
             }
@@ -231,7 +231,7 @@ namespace InventoryAndOrderManagementSystem
 
             if (inventory.ContainsKey(itemName))
             {
-
+                //dictionary.remove()
                 inventory.Remove(itemName);
                 Console.WriteLine("Item removed from inventory.\n");
             }
@@ -269,11 +269,12 @@ namespace InventoryAndOrderManagementSystem
         //print inventory list
         static void ViewInventory()
         {
-
+            //dictionary.count();
             if (inventory.Count > 0)
             {
                 Console.WriteLine("\n\t\t======== Current Inventory ========\n");
                 Console.WriteLine($"\t\tItem\t\tQuantity\tPrice\n");
+                //use foreach display all item and quantity and price 
                 foreach (KeyValuePair<string, (int quantity, decimal price)> item in inventory)
                 {
 
@@ -292,12 +293,13 @@ namespace InventoryAndOrderManagementSystem
         }
         #endregion
 
-        #region List - Order management;
+        #region List  and Dictionary - Order management;
 
 
         //order class  for AddOrder 
         class Order
         {
+            //get
             public string CustomerName { get; }
             public string ProductName { get; }
             public int ProductQuantity { get; }
@@ -307,6 +309,8 @@ namespace InventoryAndOrderManagementSystem
             //function to set value
             public Order(string customerName, string productName, int productQuantity, decimal productPrice, decimal totalPrice)
             {
+
+                //set
                 CustomerName = customerName;
                 ProductName = productName;
                 ProductQuantity = productQuantity;
@@ -332,8 +336,8 @@ namespace InventoryAndOrderManagementSystem
                 Console.WriteLine("Enter product quantity:");
                 int productQuantity = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("Enter product price:");
-                decimal productPrice = decimal.Parse(Console.ReadLine());
+                //Console.WriteLine("Enter product price:");
+                //decimal productPrice = decimal.Parse(Console.ReadLine());
 
                 if (inventory.ContainsKey(productName))
                 {
@@ -342,9 +346,9 @@ namespace InventoryAndOrderManagementSystem
                     if (quantity >= productQuantity)
                     {
                         // calculate the total price for the order
-                        decimal totalPrice = productPrice * productQuantity;
+                        decimal totalPrice = price * productQuantity;
 
-                        // reduce the quantity in the inventory
+                        // reduce the quantity in the inventory  
                         quantity -= productQuantity;
 
                         // display order details
@@ -352,15 +356,15 @@ namespace InventoryAndOrderManagementSystem
                         Console.WriteLine("==========================");
                         Console.WriteLine("\n\t\t ======== Order Receipt ======== \n");
                         Console.WriteLine("Customer Name\t Product Name \t Product Quantity\t Product Price");
-                        Console.WriteLine($"\n{customerName}\t\t\t{productName}\t\t{productQuantity}\t\t\t{productPrice}");
+                        Console.WriteLine($"\n{customerName}\t\t\t{productName}\t\t{productQuantity}\t\t\t{price}");
                         Console.WriteLine("\nTotal amount: " + totalPrice.ToString("N")); 
                         Console.WriteLine("---------------------------\n");
 
                         // update the inventory in the dictionary
-                        inventory[productName] = (quantity, price);
+                        inventory[productName] = (quantity,price);
 
-                        // create a new order and add it to the order list
-                        Order newOrder = new Order(customerName, productName, productQuantity, productPrice, totalPrice);
+                        // create a new order and add it to the order list (List<>)
+                        Order newOrder = new Order(customerName, productName, productQuantity, price, totalPrice);
                         orderList.Add(newOrder);
 
                         Console.WriteLine("Order placed successfully.");
@@ -453,6 +457,7 @@ namespace InventoryAndOrderManagementSystem
             }
             Console.ReadKey();
         }
+        #endregion
     }
+   
 }
-#endregion
